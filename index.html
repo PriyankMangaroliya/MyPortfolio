@@ -638,31 +638,33 @@
 
         <div class="row no-gutters block-9">
             <div class="col-md-6 order-md-last d-flex">
-                <form action="#" class="bg-light p-4 p-md-5 contact-form">
+                <form id="contactForm" class="bg-light p-4 p-md-5 contact-form">
                     <div class="form-group">
-                        <label>
-                            <input type="text" class="form-control" placeholder="Your Name">
-                        </label>
+                        <input type="text" id="name" class="form-control" placeholder="Your Name">
+                        <small class="text-danger" id="nameError"></small>
                     </div>
+
                     <div class="form-group">
-                        <label>
-                            <input type="text" class="form-control" placeholder="Your Email" />
-                        </label>
+                        <input type="email" id="email" class="form-control" placeholder="Your Email">
+                        <small class="text-danger" id="emailError"></small>
                     </div>
+
                     <div class="form-group">
-                        <label>
-                            <input type="text" class="form-control" placeholder="Subject" />
-                        </label>
+                        <input type="text" id="subject" class="form-control" placeholder="Subject">
+                        <small class="text-danger" id="subjectError"></small>
                     </div>
+
                     <div class="form-group">
-                        <label><textarea name="" id="" cols="30" rows="3" class="form-control"
-                                                        placeholder="Message"></textarea></label>
+                        <textarea id="message" cols="30" rows="3" class="form-control" placeholder="Message"></textarea>
+                        <small class="text-danger" id="messageError"></small>
                     </div>
+
                     <div class="form-group">
                         <input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
                     </div>
-                </form>
 
+                    <p id="successMsg" class="text-success mt-3"></p>
+                </form>
             </div>
 
             <div class="col-md-6 d-flex">
@@ -786,6 +788,71 @@
 <script src="js/scrollax.min.js"></script>
 
 <script src="js/main.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<script>
+    (function () {
+        emailjs.init("mkdrbtVAvbypRjYg1"); // EmailJS Public Key
+    })();
+
+    document.getElementById("contactForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        // Get values
+        let name = document.getElementById("name").value.trim();
+        let email = document.getElementById("email").value.trim();
+        let subject = document.getElementById("subject").value.trim();
+        let message = document.getElementById("message").value.trim();
+
+        // Error elements
+        let valid = true;
+        document.querySelectorAll("small").forEach(el => el.innerText = "");
+
+        // Validation
+        if (name === "") {
+            document.getElementById("nameError").innerText = "Name is required";
+            valid = false;
+        }
+
+        if (email === "") {
+            document.getElementById("emailError").innerText = "Email is required";
+            valid = false;
+        } else if (!/^\S+@\S+\.\S+$/.test(email)) {
+            document.getElementById("emailError").innerText = "Invalid email format";
+            valid = false;
+        }
+
+        if (subject === "") {
+            document.getElementById("subjectError").innerText = "Subject is required";
+            valid = false;
+        }
+
+        if (message === "") {
+            document.getElementById("messageError").innerText = "Message is required";
+            valid = false;
+        }
+
+        if (!valid) return;
+
+        // Send Email
+        emailjs.send("service_xvtqr5j", "template_pqfwp4o", {
+            from_name: name,
+            from_email: email,
+            subject: subject,
+            message: message
+        }).then(
+            function () {
+                document.getElementById("successMsg").innerText = "Message sent successfully!";
+                document.getElementById("contactForm").reset();
+            },
+            function (error) {
+                alert("Failed to send message. Try again!");
+            }
+        );
+    });
+</script>
+
 
 </body>
 </html>
