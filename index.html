@@ -67,7 +67,8 @@
                             <h2 class="mb-4">A Web Developer</h2>
                             <p>
                                 <a href="#contact-section" class="btn btn-primary py-3 px-4">Hire me</a>
-                                <a href="#projects-section" class="btn btn-white btn-outline-white py-3 px-4">My works</a>
+                                <a href="#projects-section" class="btn btn-white btn-outline-white py-3 px-4">My
+                                    works</a>
                             </p>
                         </div>
                     </div>
@@ -638,33 +639,25 @@
 
         <div class="row no-gutters block-9">
             <div class="col-md-6 order-md-last d-flex">
-                <form id="contactForm" class="bg-light p-4 p-md-5 contact-form">
+                <form action="https://formspree.io/f/mkogooga" method="POST" class="bg-light p-4 p-md-5 contact-form">
                     <div class="form-group">
-                        <input type="text" id="name" class="form-control" placeholder="Your Name">
-                        <small class="text-danger" id="nameError"></small>
+                        <input type="text" name="name" class="form-control" placeholder="Your Name">
                     </div>
-
                     <div class="form-group">
-                        <input type="email" id="email" class="form-control" placeholder="Your Email">
-                        <small class="text-danger" id="emailError"></small>
+                        <input type="text" name="email" class="form-control" placeholder="Your Email"/>
                     </div>
-
                     <div class="form-group">
-                        <input type="text" id="subject" class="form-control" placeholder="Subject">
-                        <small class="text-danger" id="subjectError"></small>
+                        <input type="text" name="subject" class="form-control" placeholder="Subject"/>
                     </div>
-
                     <div class="form-group">
-                        <textarea id="message" cols="30" rows="3" class="form-control" placeholder="Message"></textarea>
-                        <small class="text-danger" id="messageError"></small>
+                        <textarea name="message" cols="30" rows="3" class="form-control"
+                                  placeholder="Message"></textarea>
                     </div>
-
                     <div class="form-group">
-                        <input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
+                        <input type="submit" value="Send Message" name="submit" class="btn btn-primary py-3 px-5">
                     </div>
-
-                    <p id="successMsg" class="text-success mt-3"></p>
                 </form>
+
             </div>
 
             <div class="col-md-6 d-flex">
@@ -756,7 +749,8 @@
                     <script>document.write(new Date().getFullYear());</script>
                     All rights reserved
                     <i class="icon-heart color-danger" aria-hidden="true"></i> by
-                    <a href="https://github.com/PriyankMangaroliya" target="_blank">Priyank Mangaroliya</a>
+                    <a href="https://www.linkedin.com/in/priyank-mangaroliya-83a984283" target="_blank">Priyank
+                        Mangaroliya</a>
                 </p>
             </div>
         </div>
@@ -789,67 +783,59 @@
 
 <script src="js/main.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-
 <script>
-    (function () {
-        emailjs.init("mkdrbtVAvbypRjYg1"); // EmailJS Public Key
-    })();
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("form.contact-form");
 
-    document.getElementById("contactForm").addEventListener("submit", function (e) {
-        e.preventDefault();
+        form.addEventListener("submit", function (e) {
+            // Get fields by order
+            const name = form.querySelectorAll("input")[0];
+            const email = form.querySelectorAll("input")[1];
+            const subject = form.querySelectorAll("input")[2];
+            const message = form.querySelector("textarea");
 
-        // Get values
-        let name = document.getElementById("name").value.trim();
-        let email = document.getElementById("email").value.trim();
-        let subject = document.getElementById("subject").value.trim();
-        let message = document.getElementById("message").value.trim();
+            // Remove old errors
+            form.querySelectorAll(".error-msg").forEach(el => el.remove());
 
-        // Error elements
-        let valid = true;
-        document.querySelectorAll("small").forEach(el => el.innerText = "");
+            let valid = true;
 
-        // Validation
-        if (name === "") {
-            document.getElementById("nameError").innerText = "Name is required";
-            valid = false;
-        }
-
-        if (email === "") {
-            document.getElementById("emailError").innerText = "Email is required";
-            valid = false;
-        } else if (!/^\S+@\S+\.\S+$/.test(email)) {
-            document.getElementById("emailError").innerText = "Invalid email format";
-            valid = false;
-        }
-
-        if (subject === "") {
-            document.getElementById("subjectError").innerText = "Subject is required";
-            valid = false;
-        }
-
-        if (message === "") {
-            document.getElementById("messageError").innerText = "Message is required";
-            valid = false;
-        }
-
-        if (!valid) return;
-
-        // Send Email
-        emailjs.send("service_xvtqr5j", "template_pqfwp4o", {
-            from_name: name,
-            from_email: email,
-            subject: subject,
-            message: message
-        }).then(
-            function () {
-                document.getElementById("successMsg").innerText = "Message sent successfully!";
-                document.getElementById("contactForm").reset();
-            },
-            function (error) {
-                alert("Failed to send message. Try again!");
+            // Helper function to show error
+            function showError(input, msg) {
+                const error = document.createElement("small");
+                error.className = "error-msg";
+                error.style.color = "red";
+                error.innerText = msg;
+                input.parentElement.appendChild(error);
+                valid = false;
             }
-        );
+
+            // Name validation
+            if (name.value.trim() === "") {
+                showError(name, "Name is required");
+            }
+
+            // Email validation
+            if (email.value.trim() === "") {
+                showError(email, "Email is required");
+            } else if (!/^\S+@\S+\.\S+$/.test(email.value.trim())) {
+                showError(email, "Invalid email format");
+            }
+
+            // Subject validation
+            if (subject.value.trim() === "") {
+                showError(subject, "Subject is required");
+            }
+
+            // Message validation
+            if (message.value.trim() === "") {
+                showError(message, "Message is required");
+            }
+
+            // Stop submit if invalid
+            if (!valid) {
+                e.preventDefault();
+            }
+        });
     });
 </script>
 
