@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="078c291d-e22d-43a9-8834-f93a36a5ba44" name="Changes" comment="new commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Priyank Mangaroliya.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/Priyank Mangaroliya Resume.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -81,7 +82,8 @@
       <workItem from="1767285393952" duration="1318000" />
       <workItem from="1767325175337" duration="2106000" />
       <workItem from="1767355041224" duration="751000" />
-      <workItem from="1767459291549" duration="190000" />
+      <workItem from="1767459291549" duration="682000" />
+      <workItem from="1767521689374" duration="88000" />
     </task>
     <task id="LOCAL-00001" summary="commit">
       <option name="closed" value="true" />
@@ -131,7 +133,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767355137898</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="new commit">
+      <option name="closed" value="true" />
+      <created>1767459635563</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1767459635564</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
